@@ -1,0 +1,7 @@
+{
+  "url_base": "http://localhost:8000",
+  "scraper_id": "scraper_test",
+  "device_id": "device_id_test",
+   "app_id": "app_id_test",
+   "newspaper": ["elpais","elmundo", "lavanguardia", "abc"]
+}
