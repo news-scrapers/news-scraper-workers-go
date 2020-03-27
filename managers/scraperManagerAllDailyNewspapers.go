@@ -63,7 +63,7 @@ func (mainScraper ScraperManagerAllDailyNewspapers) StartScraping(config models.
 func (mainScraper *ScraperManagerAllDailyNewspapers) ScrapOneIteration(scraper dailyScrapers.DailyScraper, source string, config models.ScrapingConfig, wg *sync.WaitGroup) {
 	defer wg.Done()
 	log.Info("starting scraping using " + source)
-	scrapingIndex, err := models.GetCurrentIndex(config.ScraperId)
+	scrapingIndex, err := models.GetCurrentIndex(config.ScraperId, source)
 
 	if scrapingIndex.ScraperType == "" || err != nil {
 		scrapingIndex = *models.CreateScrapingIndex(config, source)
