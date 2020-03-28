@@ -26,7 +26,7 @@ type ScrapingIndex struct {
 }
 
 func (scrapingIndex *ScrapingIndex) Save() error {
-
+	scrapingIndex.DateScraping = time.Now()
 	db := GetDB()
 	collection := db.Collection("ScrapingIndex")
 	options := options.FindOneAndReplaceOptions{}
