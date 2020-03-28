@@ -28,21 +28,24 @@ func (mainScraper ScraperManagerAllHistoricNewspapers) StartScraping(config mode
 	for {
 		var wg sync.WaitGroup
 
-		if utils.StringInSlice("elmundo", config.NewsPaper) {
+		scrapAll := utils.StringInSlice("all", config.NewsPaper)
+
+
+		if utils.StringInSlice("elmundo", config.NewsPaper) || scrapAll {
 			go mainScraper.ScrapOneIteration(scraperElmundo, "elmundo", config, &wg)
 			wg.Add(1)
 		}
 
-		if utils.StringInSlice("elpais", config.NewsPaper) {
+		if utils.StringInSlice("elpais", config.NewsPaper) || scrapAll {
 			go mainScraper.ScrapOneIteration(scraperEPais, "elpais", config, &wg)
 			wg.Add(1)
 		}
 
-		if utils.StringInSlice("abc", config.NewsPaper) {
+		if utils.StringInSlice("abc", config.NewsPaper) || scrapAll {
 			go mainScraper.ScrapOneIteration(scraperAbc, "abc", config, &wg)
 			wg.Add(1)
 		}
-		if utils.StringInSlice("lavanguardia", config.NewsPaper) {
+		if utils.StringInSlice("lavanguardia", config.NewsPaper) || scrapAll {
 			go mainScraper.ScrapOneIteration(scraperLavanguardia, "lavanguardia", config, &wg)
 			wg.Add(1)
 		}
