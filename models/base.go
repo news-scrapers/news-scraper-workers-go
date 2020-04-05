@@ -25,7 +25,7 @@ func loadDb() error {
 	dbAddress := os.Getenv("database_url")
 	usersdbName := os.Getenv("database_name")
 
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
 	client, err2 := mongo.Connect(ctx, options.Client().ApplyURI(dbAddress))
 	db = client.Database(usersdbName)
 	return err2

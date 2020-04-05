@@ -1,0 +1,12 @@
+version: '2.1'
+
+volumes:
+  news-scraper-workers-go:
+
+
+services:
+  news-scraper-workers-go:
+    build: .
+    restart: always
+    env_file:
+      - .env

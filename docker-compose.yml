@@ -1,12 +1,20 @@
 version: '2.1'
 
 volumes:
-  news-scraper-workers-go:
+  news-scraper-workers-daily-go:
+  news-scraper-workers-historic-go:
 
 
 services:
-  news-scraper-workers-go:
+  news-scraper-workers-daily-go:
     build: .
     restart: always
+    network_mode: "host"
     env_file:
-      - .env
+      - .env_historic
+  news-scraper-workers-historic-go:
+    build: .
+    restart: always
+    network_mode: "host"
+    env_file:
+      - .env_daily
