@@ -19,7 +19,7 @@ type AbcHistoricScraper struct {
 
 func (scraper AbcHistoricScraper) ScrapDate(date time.Time) []models.NewScraped {
 	newsScraped := []models.NewScraped{}
-	for i := 0; i < 82; i++ {
+	for i := 0; i < 80; i++ {
 		newsScraped = append(newsScraped, scraper.ScrapDatePage(date, i))
 	}
 	return newsScraped
