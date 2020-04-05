@@ -84,6 +84,11 @@ func (mainScraper *ScraperManagerAllHistoricNewspapers) ScrapOneIteration(scrape
 
 
 	newsScraped := scraper.ScrapDate(date)
+
+	log.Info("-------------------------------------------------------------------------------------------------")
+	log.Info("Saving all scrapded results for " +  newspaper)
+	log.Info("-------------------------------------------------------------------------------------------------")
+
 	models.CreateOrUpdateManyNewsScraped(&newsScraped)
 
 	scrapingIndex.DateLastNew = scrapingIndex.DateLastNew.Add(-24*time.Hour)
