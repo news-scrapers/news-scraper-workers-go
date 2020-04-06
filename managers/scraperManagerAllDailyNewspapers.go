@@ -63,10 +63,10 @@ func (mainScraper ScraperManagerAllDailyNewspapers) StartScraping(config models.
 func (mainScraper *ScraperManagerAllDailyNewspapers) ScrapOneIteration(scraper dailyScrapers.DailyScraper, source string, config models.ScrapingConfig, wg *sync.WaitGroup) {
 	defer wg.Done()
 	log.Info("starting scraping using " + source)
-	scrapingIndex, err := models.GetCurrentIndex(config.ScraperId, source)
+	scrapingIndex, err := models.GetCurrentIndex(config.ScraperId, source, "daily")
 
-	if scrapingIndex.ScraperType == "" || err != nil {
-		scrapingIndex = *models.CreateScrapingIndex(config, source)
+	if scrapingIndex==nil || err != nil {
+		scrapingIndex = models.CreateScrapingIndex(config, source)
 	}
 
 	scrapingIndex.UpdateUrls(config, source)
@@ -79,7 +79,7 @@ func (mainScraper *ScraperManagerAllDailyNewspapers) ScrapOneIteration(scraper d
 	log.Printf("starting with url number %d", index)
 
 	nextUrl := scrapingIndex.StartingUrls[index]
-	scraper.ScrapNewsInItems(nextUrl, &scrapingIndex)
+	scraper.ScrapNewsInItems(nextUrl, scrapingIndex)
 
 	//models.SaveMany(results, config)
 

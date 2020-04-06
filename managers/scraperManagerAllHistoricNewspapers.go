@@ -59,8 +59,8 @@ func (mainScraper ScraperManagerAllHistoricNewspapers) StartScraping(config mode
 
 func (mainScraper *ScraperManagerAllHistoricNewspapers) ScrapOneIteration(scraper historicScrapers.NewsScraper, newspaper string, config models.ScrapingConfig, wg *sync.WaitGroup) {
 	defer wg.Done()
-	scrapingIndex, _:= models.GetCurrentIndexNewsPaper(config.ScraperId, newspaper)
-	if scrapingIndex ==nil {
+	scrapingIndex, err:= models.GetCurrentIndex(config.ScraperId, newspaper, "historic")
+	if scrapingIndex==nil || err != nil {
 		scrapingIndex = models.CreateScrapingIndex(config, newspaper)
 	}
 	date := scrapingIndex.DateLastNew

@@ -35,7 +35,7 @@ func (scrapingIndex *ScrapingIndex) Save() error {
 
 	log.Println("saving scraping index for id" + scrapingIndex.ScraperID + " and newspaper ")
 	log.Println(scrapingIndex.NewsPaper)
-	err := collection.FindOneAndReplace(context.Background(), bson.M{"scraper_id": scrapingIndex.ScraperID, "newspaper": scrapingIndex.NewsPaper}, scrapingIndex, &options)
+	err := collection.FindOneAndReplace(context.Background(), bson.M{"scraper_id": scrapingIndex.ScraperID, "scraper_type":scrapingIndex.ScraperType, "newspaper": scrapingIndex.NewsPaper}, scrapingIndex, &options)
 
 	if err != nil {
 		return errors.New("error finding")
@@ -59,7 +59,7 @@ func CreateScrapingIndex(config ScrapingConfig, newspaper string) *ScrapingIndex
 	return &scrapingIndexNew
 }
 
-func GetCurrentIndex(scraperID string, source string) (scrapingIndex ScrapingIndex, err error) {
+func GetCurrentIndex(scraperID string, source string, scraperType string) (scrapingIndex *ScrapingIndex, err error) {
 	db := GetDB()
 	collection := db.Collection("ScrapingIndex")
 
@@ -67,8 +67,8 @@ func GetCurrentIndex(scraperID string, source string) (scrapingIndex ScrapingInd
 	// Sort by `_id` field descending
 	options.Sort = bson.D{{"date_last_new", int32(1)}}
 
-	results := ScrapingIndex{}
-	err = collection.FindOne(context.Background(), bson.M{"scraper_id": scraperID, "newspaper": source}, &options).Decode(&results)
+	results := &ScrapingIndex{}
+	err = collection.FindOne(context.Background(), bson.M{"scraper_id": scraperID, "scraper_type": scraperType, "newspaper": source}, &options).Decode(&results)
 	if err != nil {
 		return scrapingIndex, err
 	}
