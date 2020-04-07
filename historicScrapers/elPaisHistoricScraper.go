@@ -57,8 +57,8 @@ func (scraper *ElPaisScraper) ScrapPage(urlNew UrlNew) models.NewScraped {
 	})
 
 	c.OnHTML("meta", func(e *colly.HTMLElement) {
-		if e.Attr("name")=="news_keywords" {
-			tags = strings.Split(content, ",")
+		if e.Attr("property")=="article:tag" {
+			tags = append(tags, e.Attr("content"))
 		}
 	})
 
