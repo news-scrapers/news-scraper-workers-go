@@ -17,7 +17,7 @@ func TestScraperElpais(t *testing.T) {
 	}
 	config := models.ScrapingConfig{UrlBase: "http://localhost:8000", NewsPaper: []string{"elpais"}, ScraperId: "testScraperElpais", DeviceID: "testDeviceElpais"}
 	scraper := ElPaisScraper{Config: config}
-	date := time.Date(2018, 05, 04, 0, 0, 0, 0, time.UTC)
+	date := time.Date(2017, 10, 02, 0, 0, 0, 0, time.UTC)
 	urlNewsElPais := scraper.GetNewsUrls(date, 1)
 
 	resultElPais := scraper.ScrapPage(urlNewsElPais[1])

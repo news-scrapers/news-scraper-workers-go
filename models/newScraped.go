@@ -80,7 +80,7 @@ func (user *NewScraped) SaveOrUpdate() error {
 	_, err := collection.UpdateOne(context.Background(), filter, update, options.Update().SetUpsert(true))
 
 	if err != nil {
-		log.Fatal(err)
+		log.Info(err)
 		return err
 
 	}
