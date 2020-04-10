@@ -1,11 +1,11 @@
 version: '2.1'
 
 volumes:
-  news-scraper-workers-go:
+  news-scraper-workers-go-single:
 
 
 services:
-  news-scraper-workers-go:
+  news-scraper-workers-go-single:
     build: .
     restart: always
     env_file:

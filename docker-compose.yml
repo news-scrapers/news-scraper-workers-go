@@ -6,13 +6,13 @@ volumes:
 
 
 services:
-  news-scraper-workers-daily-go:
+  news-scraper-workers-historic-go:
     build: .
     restart: always
     network_mode: "host"
     env_file:
       - .env_historic
-  news-scraper-workers-historic-go:
+  news-scraper-workers-daily-go:
     build: .
     restart: always
     network_mode: "host"
