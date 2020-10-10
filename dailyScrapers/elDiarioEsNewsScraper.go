@@ -28,11 +28,18 @@ func (scraper *ElDiaroEsNewsScraper) ScrapNewUrl(urlNew models.UrlNew) models.Ne
 		Parallelism: 2,
 		RandomDelay: 1 * time.Second,
 	})
+	date := ""
+
+
+	c.OnHTML("meta", func(e *colly.HTMLElement) {
+		if (e.Attr("property") == "article:published_time") {
+			date = e.Attr("content")
+		}
+	})
 
 	c.OnHTML(".article-page", func(e *colly.HTMLElement) {
 			headline := ""
 			content := ""
-			date := ""
 			tags := []string{}
 
 
@@ -43,17 +50,15 @@ func (scraper *ElDiaroEsNewsScraper) ScrapNewUrl(urlNew models.UrlNew) models.Ne
 			e.ForEach("p.article-text", func(_ int, elem *colly.HTMLElement) {
 				content = content + " " + elem.Text
 			})
-			e.ForEach(".day", func(_ int, elem *colly.HTMLElement) {
-				date = strings.ReplaceAll(elem.Text, " ", "")
-				date = strings.ReplaceAll(date, "-", "")
-			})
 			e.ForEach("li", func(_ int, elem *colly.HTMLElement) {
 				elem.ForEach("a.tag-link", func(_ int, elem2 *colly.HTMLElement) {
 					tags = append(tags, strings.TrimSpace(elem2.Text))
 				})
 			})
 
-			t, _ := time.Parse("02/01/2006", date)
+			layout := "2006-01-02"
+			date = strings.Split(date, "T")[0]
+			t, _ := time.Parse(layout, date)
 			result.Url=urlNew.Url
 			result.Headline=headline
 			result.ScraperID = scraper.Config.ScraperId
