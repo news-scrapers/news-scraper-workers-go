@@ -21,6 +21,7 @@ func TestScraperAbc(t *testing.T) {
 	date := time.Date(2018, 05, 04, 0, 0, 0, 0, time.UTC)
 	results := scraper.ScrapDate(date)
 	result := results[1]
+
 	assert.NotEqual(t, result.Headline, "", "OK response is expected")
 
 }

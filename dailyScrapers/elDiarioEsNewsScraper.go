@@ -29,26 +29,26 @@ func (scraper *ElDiaroEsNewsScraper) ScrapNewUrl(urlNew models.UrlNew) models.Ne
 		RandomDelay: 1 * time.Second,
 	})
 
-	c.OnHTML(".pg-main", func(e *colly.HTMLElement) {
+	c.OnHTML(".article-page", func(e *colly.HTMLElement) {
 			headline := ""
 			content := ""
 			date := ""
 			tags := []string{}
 
 
-		e.ForEach(".pg-headline", func(_ int, elem *colly.HTMLElement) {
+		e.ForEach(".title", func(_ int, elem *colly.HTMLElement) {
 				headline = strings.TrimSpace(elem.Text)
 			})
 
-			e.ForEach("p.mce", func(_ int, elem *colly.HTMLElement) {
+			e.ForEach("p.article-text", func(_ int, elem *colly.HTMLElement) {
 				content = content + " " + elem.Text
 			})
-			e.ForEach(".date", func(_ int, elem *colly.HTMLElement) {
+			e.ForEach(".day", func(_ int, elem *colly.HTMLElement) {
 				date = strings.ReplaceAll(elem.Text, " ", "")
 				date = strings.ReplaceAll(date, "-", "")
 			})
-			e.ForEach(".lst-item-tag", func(_ int, elem *colly.HTMLElement) {
-				elem.ForEach("a", func(_ int, elem2 *colly.HTMLElement) {
+			e.ForEach("li", func(_ int, elem *colly.HTMLElement) {
+				elem.ForEach("a.tag-link", func(_ int, elem2 *colly.HTMLElement) {
 					tags = append(tags, strings.TrimSpace(elem2.Text))
 				})
 			})
