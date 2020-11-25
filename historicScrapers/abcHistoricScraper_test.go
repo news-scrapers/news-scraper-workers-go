@@ -11,6 +11,7 @@ import (
 )
 
 func TestScraperAbc(t *testing.T) {
+	t.Skip()
 	e := godotenv.Load()
 	if e != nil {
 		fmt.Print(e)
