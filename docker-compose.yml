@@ -5,15 +5,11 @@ services:
     build: .
     restart: always
     network_mode: "host"
-    volumes:
-      - "./data/historic"
     env_file:
       - .env_historic
   news-scraper-workers-daily-go:
     build: .
     restart: always
     network_mode: "host"
-    volumes:
-      - "./data/daily"
     env_file:
       - .env_daily
