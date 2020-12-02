@@ -6,3 +6,4 @@ docker rm news-scraper-workers-daily-go
 docker rm news-scraper-workers-historic-go
 docker volume prune -f
 docker container prune -f
+docker-compose up -d
